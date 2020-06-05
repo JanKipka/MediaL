@@ -21,13 +21,21 @@
                     @if($type === 'book')
                         <td>
                             @foreach($item->author as $author)
-                                {{$author->firstName}} {{$author->lastName}}
+                                @if ($loop->remaining > 0)
+                                    {{$author->firstName}} {{$author->lastName}},
+                                @else
+                                    {{$author->firstName}} {{$author->lastName}}
+                                @endif
                             @endforeach
                         </td>
                     @else
                         <td>
                             @foreach($item->directors as $director)
-                                {{$director->firstName}} {{$director->lastName}}
+                                @if ($loop->remaining > 0)
+                                    {{$director->firstName}} {{$director->lastName}},
+                                @else
+                                    {{$director->firstName}} {{$director->lastName}}
+                                @endif
                             @endforeach
                         </td>
                     @endif
