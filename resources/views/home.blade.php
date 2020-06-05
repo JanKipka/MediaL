@@ -47,7 +47,7 @@
                     <div class="card-body">
                         <h2 class="card-title">Your profile</h2>
                         <h5>{{$user->name}}</h5>
-                        <a href="{{route('add', ['type' => 'book'])}}" class="btn btn-primary">View Profile</a>
+                        <a href="{{route('profile')}}" class="btn btn-primary">View Profile</a>
                     </div>
                 </div>
             </div>

@@ -44,4 +44,8 @@ class User extends Authenticatable
     public function movies() {
         return $this->belongsToMany('App\Movie', 'user_movie');
     }
+
+    public function profile() {
+        return $this->hasOne('App\Profile');
+    }
 }
