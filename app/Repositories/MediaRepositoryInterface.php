@@ -15,6 +15,10 @@ interface MediaRepositoryInterface
 
     public function getMediaByID($mediaId);
 
-    public function persistMedia($media);
+    public function persistBook($title, $format, $author, $genre);
+
+    public function persistMovie($title, $format, $director, $genre);
+
+    public function getNumberOfGenres();
 
 }

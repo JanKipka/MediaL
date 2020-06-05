@@ -21,4 +21,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/add', 'HomeController@add')->name('add');
-Route::post('/persistMedia', 'HomeController@persist')->name('persistMedia');
+Route::post('/persist', 'AddController@persist')->name('persist');
+Route::get('/list', 'ListController@list')->name('list');

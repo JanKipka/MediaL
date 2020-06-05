@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <h2>Add a {{ $type }}</h2>
-                <form action="{{route('persistMedia')}}" method="POST" id="addForm">
+                <form action="{{route('persist')}}" method="POST" id="addForm">
                     @csrf
                     <div class="form-group">
                         <label for="media_title">Title:</label>
@@ -14,28 +14,32 @@
                     </div>
                     <ul class="nav nav-tabs" id="artistTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link {{ count($authors) > 0 ? 'active' : '' }}" id="existing-tab" data-toggle="tab" href="#existing" role="tab"
+                            <a class="nav-link {{ count($artists) > 0 ? 'active' : '' }}" id="existing-tab"
+                               data-toggle="tab" href="#existing" role="tab"
                                aria-controls="existing" aria-selected="true">Choose
                                 existing {{ $type === 'book' ? 'author' : 'director' }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ count($authors) === 0 ? 'active' : '' }}" id="new-tab" data-toggle="tab" href="#new" role="tab"
+                            <a class="nav-link {{ count($artists) === 0 ? 'active' : '' }}" id="new-tab"
+                               data-toggle="tab" href="#new" role="tab"
                                aria-controls="new" aria-selected="false">Enter
                                 new {{ $type === 'book' ? 'author' : 'director' }}</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="artistTabContent">
-                        <div class="tab-pane form-group fade show {{ count($authors) > 0 ? 'active' : '' }}" id="existing" role="tabpanel"
+                        <div class="tab-pane form-group fade show {{ count($artists) > 0 ? 'active' : '' }}"
+                             id="existing" role="tabpanel"
                              aria-labelledby="existing-tab">
                             <label for="format">{{ $type === 'book' ? 'Author' : 'Director' }}:</label>
                             <select class="form-control" name="artist" id="artistSelect">
-                                @foreach($authors as $author)
+                                @foreach($artists as $artist)
                                     <option
-                                        value="{{$author->id}}">{{$author->firstName}} {{$author->lastName}}</option>
+                                        value="{{$artist->id}}">{{$artist->firstName}} {{$artist->lastName}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="tab-pane {{ count($authors) === 0 ? 'active' : '' }}" id="new" role="tabpanel" aria-labelledby="new-tab">
+                        <div class="tab-pane {{ count($artists) === 0 ? 'active' : '' }}" id="new" role="tabpanel"
+                             aria-labelledby="new-tab">
                             <div class="form-group">
                                 <label for="artist_name">First
                                     name:</label>

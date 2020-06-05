@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Author;
 use App\Book;
+use App\Director;
 use App\Format;
 use App\Genre;
 use App\MediaFormat;
@@ -37,9 +38,14 @@ class HomeController extends Controller
     {
         $books = $this->mediaRepository->getAllBooksForUser();
         $movies = $this->mediaRepository->getAllMoviesForUser();
+        $numGenres = $this->mediaRepository->getNumberOfGenres();
+        $user = Auth::user();
         return view('home', [
             'countOfBooks' => count($books),
-            'countOfMovies' => count($movies)
+            'countOfMovies' => count($movies),
+            'countOfGenres' => $numGenres,
+            'totalCount' => count($books) + count($movies),
+            'user' => $user
         ]);
     }
 
@@ -48,57 +54,16 @@ class HomeController extends Controller
         $formatType = $request['type'] === 'book' ? MediaFormat::BOOK : MediaFormat::MOVIE;
         $formats = Format::where('mediaFormat', $formatType)->get();
         $genres = Genre::all();
-        $authors = Author::all();
+        if ($formatType === MediaFormat::BOOK) {
+            $artists = Author::all();
+        } else {
+            $artists = Director::all();
+        }
         return view('add', [
             'type' => $request['type'],
             'genres' => $genres,
-            'authors' => $authors,
+            'artists' => $artists,
             'formats' => $formats
         ]);
-    }
-
-    public function persist(Request $request)
-    {
-        $title = $request['title'];
-        $artistTabChoice = $request['artistTabChoice'];
-        $artist = $request['artist'];
-        $artist_first = $request['artist_first'];
-        $artist_last = $request['artist_last'];
-        $genre = $request['genre'];
-        $format = $request['format'];
-        $type = $request['type'];
-        $user = Auth::user();
-
-        $format = Format::find($format);
-        $genre = Genre::find($genre);
-
-        if ($type === 'book') {
-            if ($artistTabChoice === 'new') {
-                $author = new Author();
-                $author->setFirstName($artist_first);
-                $author->setLastName($artist_last);
-                $author->save();
-            } else {
-                $author = Author::find($artist);
-            }
-
-            $book = new Book();
-            $book->setTitle($title);
-            $book->format()->associate($format);
-            $book->genre()->associate($genre);
-            $book->save();
-            $book->users()->save($user);
-
-            $author->books()->save($book);
-        }
-
-        $books = $this->mediaRepository->getAllBooksForUser();
-        $movies = $this->mediaRepository->getAllMoviesForUser();
-
-        return view('home',
-            [
-                'countOfBooks' => count($books),
-                'countOfMovies' => count($movies)
-            ]);
     }
 }
