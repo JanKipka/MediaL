@@ -13,7 +13,7 @@ class CreateDirectorsMoviesTable extends Migration
      */
     public function up()
     {
-        Schema::create('directors_movies', function (Blueprint $table) {
+        Schema::create('director_movie', function (Blueprint $table) {
             $table->id();
             $table->foreignId('director_id')->constrained();
             $table->foreignId('movie_id')->constrained();
@@ -28,6 +28,6 @@ class CreateDirectorsMoviesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('directors_movies');
+        Schema::dropIfExists('director_movie');
     }
 }

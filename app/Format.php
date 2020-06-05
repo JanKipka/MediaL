@@ -4,12 +4,14 @@
 namespace App;
 
 
-class Format
-{
+use Illuminate\Database\Eloquent\Model;
 
-    const BLURAY = 'BLURAY';
-    const DVD = 'DVD';
-    const PAPERBACK = 'PAPERBACK';
-    const HARDCOVER = 'HARDCOVER';
+class Format extends Model
+{
+    protected $fillable = ['name' , 'mediaFormat'];
+
+    public function media() {
+        return $this->hasMany('App\Media');
+    }
 
 }

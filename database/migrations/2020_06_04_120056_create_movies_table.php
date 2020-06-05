@@ -16,7 +16,7 @@ class CreateMoviesTable extends Migration
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('format');
+            $table->foreignId('format_id')->nullable()->constrained();
             $table->foreignId('genre_id')->nullable()->constrained();
             $table->timestamps();
         });

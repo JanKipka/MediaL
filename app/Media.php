@@ -10,8 +10,7 @@ class Media extends Model
 {
 
     protected $fillable = [
-        'title',
-        'format',
+        'title'
     ];
 
     public function setTitle($title) {
@@ -22,16 +21,13 @@ class Media extends Model
         return $this->title;
     }
 
-    public function setFormat($format) {
-        $this->attributes['format'] = $format;
-    }
-
-    public function getFormat() {
-        return $this->format;
+    public function format() {
+        return $this->belongsTo('App\Format');
     }
 
     public function genre() {
         return $this->belongsTo('App\Genre');
     }
+
 
 }

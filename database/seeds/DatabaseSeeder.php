@@ -40,6 +40,24 @@ class DatabaseSeeder extends Seeder
         $romance->setName('Romance');
         $romance->save();
 
+        $formatData = [
+            [
+                'name' => 'Paperback',
+                'mediaFormat' => \App\MediaFormat::BOOK
+            ], [
+                'name' => 'Hardcover',
+                'mediaFormat' => \App\MediaFormat::BOOK
+            ], [
+                'name' => 'Bluray',
+                'mediaFormat' => \App\MediaFormat::MOVIE
+            ], [
+                'name' => 'DVD',
+                'mediaFormat' => \App\MediaFormat::MOVIE
+            ]
+        ];
+
+        DB::table('formats')->insert($formatData);
+
         /*$book = new Book();
         $book->setTitle('Verblendung');
         $book->setFormat(\App\Format::PAPERBACK);
