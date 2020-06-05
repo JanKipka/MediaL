@@ -8,6 +8,7 @@ use App\Director;
 use App\Format;
 use App\Genre;
 use App\MediaFormat;
+use App\Movie;
 use App\Repositories\MediaRepositoryInterface;
 use http\Client\Curl\User;
 use Illuminate\Http\Request;
@@ -56,14 +57,17 @@ class HomeController extends Controller
         $genres = Genre::all();
         if ($formatType === MediaFormat::BOOK) {
             $artists = Author::all();
+            $mediaItems = Book::all();
         } else {
             $artists = Director::all();
+            $mediaItems = Movie::all();
         }
         return view('add', [
             'type' => $request['type'],
             'genres' => $genres,
             'artists' => $artists,
-            'formats' => $formats
+            'formats' => $formats,
+            'mediaItems' => $mediaItems
         ]);
     }
 }

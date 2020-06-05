@@ -49839,8 +49839,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\kipka\Documents\Privat\Media_Library\medialibrary\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\kipka\Documents\Privat\Media_Library\medialibrary\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/jankipka/Documents/PHP Projekte/MediaL/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/jankipka/Documents/PHP Projekte/MediaL/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

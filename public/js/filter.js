@@ -81,40 +81,41 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/add.js":
-/*!*****************************!*\
-  !*** ./resources/js/add.js ***!
-  \*****************************/
+/***/ "./resources/js/filter.js":
+/*!********************************!*\
+  !*** ./resources/js/filter.js ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$('#addForm').submit(function () {
-  var existing = $('#existing-tab');
-  var newTab = $('#new-tab');
-  var artistTabChoice = $('#artistTabChoice');
-
-  if (existing.hasClass('active')) {
-    artistTabChoice.val('existing');
-  } else {
-    artistTabChoice.val('new');
-  }
+/*$(document).ready(function(){
+    $("#table-search").on("keyup", function() {
+        let value = $(this).val().toLowerCase();
+        $("#mediaTable tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});*/
+$(document).ready(function () {
+  $.noConflict();
+  $('#mediaTable').DataTable();
 });
 
 /***/ }),
 
-/***/ 1:
-/*!***********************************!*\
-  !*** multi ./resources/js/add.js ***!
-  \***********************************/
+/***/ 2:
+/*!**************************************!*\
+  !*** multi ./resources/js/filter.js ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/jankipka/Documents/PHP Projekte/MediaL/resources/js/add.js */"./resources/js/add.js");
+module.exports = __webpack_require__(/*! /Users/jankipka/Documents/PHP Projekte/MediaL/resources/js/filter.js */"./resources/js/filter.js");
 
 
 /***/ })
