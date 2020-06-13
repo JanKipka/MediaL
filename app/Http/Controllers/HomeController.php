@@ -57,7 +57,7 @@ class HomeController extends Controller
         $genres = Genre::all();
         if ($formatType === MediaFormat::BOOK) {
             $artists = Author::all();
-            $mediaItems = Book::all();
+            $mediaItems = Book::with('format', 'genre')->get();
         } else {
             $artists = Director::all();
             $mediaItems = Movie::all();

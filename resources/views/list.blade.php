@@ -3,7 +3,8 @@
 @section('content')
     <div class="container">
         <h2>All your {{ $type }}s</h2>
-        @include('components.listtable', ['type' => $type, 'mediaItems' => $mediaItems])
+        <list-table-component type="{{ $type }}" :mediaItems="{{json_encode($mediaItems)}}">
+        </list-table-component>
     </div>
 @endsection
 

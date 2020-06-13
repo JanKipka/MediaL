@@ -18,4 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/queryBooks', 'AddController@queryBookApi');
+
 // Route::post('/persist', 'AddController@persist')->name('books.persist');
