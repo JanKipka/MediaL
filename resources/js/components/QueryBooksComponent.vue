@@ -58,6 +58,7 @@
             async queryApi() {
                 this.books = [];
                 this.searching = 1;
+                this.noResultsFound = false;
                 if (this.queryAuthor || this.queryISBN || this.queryTitle) {
                     if (this.timer) {
                         clearTimeout(this.timer);

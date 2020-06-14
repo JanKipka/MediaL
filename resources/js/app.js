@@ -60,6 +60,10 @@ Vue.filter('authors', function (authorArray) {
     return '';
 });
 
+Vue.filter('hasRead', function (hasRead) {
+    return hasRead === 0 ? 'No' : 'Yes';
+});
+
 Vue.filter('isbn', function (industryIdentifiers) {
     if (industryIdentifiers) {
         for (let i = 0; i < industryIdentifiers.length; i++) {

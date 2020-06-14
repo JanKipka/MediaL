@@ -6,6 +6,7 @@
             <th scope="col">{{ type === 'book' ? 'Authors' : 'Directors'}}</th>
             <th scope="col">Format</th>
             <th scope="col">Genre</th>
+            <th scope="col">Read?</th>
             <th scope="col"></th>
         </tr>
         </thead>
@@ -22,7 +23,8 @@
             </td>
             <td>{{item.format.name}}</td>
             <td>{{item.genre.name}}</td>
-            <td><img :src="item.imageLink" alt="thumbnail" class="w-75"/></td>
+            <td>{{item.read | hasRead }}</td>
+            <td><div><img :src="item.imageLink" alt="thumbnail" class="book-thumbnail"/></div></td>
         </tr>
         </tbody>
     </table>
@@ -36,5 +38,7 @@
 </script>
 
 <style scoped>
-
+    .book-thumbnail {
+        width: 100px;
+    }
 </style>
