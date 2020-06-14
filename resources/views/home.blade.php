@@ -14,45 +14,28 @@
         </div>
         <div class="row mt-3">
             <div class="col-sm-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">Your books</h2>
-                        <h5>{{ $countOfBooks ?? '0'}} books total</h5>
-                        <a href="{{route('list', ['type' => 'book'])}}" class="btn btn-success">View all</a>
-                        <a href="{{route('add', ['type' => 'book'])}}" class="btn btn-primary">Add book</a>
-                    </div>
-                </div>
+                <card-component title="Your books" subheadline="{{ $countOfBooks ?? '0'}} books total"
+                                :links="[{url: '{{route('list', ['type' => 'book'])}}', btn: 'btn btn-success', desc: 'View all'},
+                                    {url: '{{route('add', ['type' => 'book'])}}', btn: 'btn btn-primary', desc: 'Add book'}]">
+                </card-component>
             </div>
             <div class="col-sm-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">Your movies</h2>
-                        <h5> {{ $countOfMovies ?? '0' }} movies total</h5>
-                        <a href="{{route('list', ['type' => 'movie'])}}" class="btn btn-success">View all</a>
-                        <a href="{{route('add', ['type' => 'movie'])}}" class="btn btn-primary">Add movie</a>
-                    </div>
-                </div>
+                <card-component title="Your movies" subheadline="{{ $countOfMovies ?? '0' }} movies total"
+                                :links="[{url: '{{route('list', ['type' => 'movie'])}}', btn: 'btn btn-success', desc: 'View all'},
+                                    {url: '{{route('add', ['type' => 'movie'])}}', btn: 'btn btn-primary', desc: 'Add movie'}]">
+                </card-component>
             </div>
             <div class="col-sm-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">Your genres</h2>
-                        <h5>{{ $countOfGenres ?? '0'}} genres total</h5>
-                        <a href="{{route('add', ['type' => 'book'])}}" class="btn btn-primary">Add genre</a>
-                    </div>
-                </div>
+                <card-component title="Your genres" subheadline="{{ $countOfGenres ?? '0'}} genres total"
+                                :links="[{url: '{{route('list', ['type' => 'movie'])}}', btn: 'btn btn-primary', desc: 'View all'}]">
+                </card-component>
             </div>
             <div class="col-sm-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">Your profile</h2>
-                        <h5>{{$user->name}}</h5>
-                        <a href="{{route('profile')}}" class="btn btn-primary">View Profile</a>
-                    </div>
-                </div>
+                <card-component title="Your profile" subheadline="{{$user->name}}"
+                                :links="[{url: '{{route('profile')}}', btn: 'btn btn-primary', desc: 'View Profile'}]">
+                </card-component>
             </div>
         </div>
-    </div>
     </div>
     </div>
 @endsection

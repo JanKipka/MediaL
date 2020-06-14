@@ -13,8 +13,14 @@ class Media extends Model
         'title'
     ];
 
+    protected $with = ['format', 'genre'];
+
     public function setTitle($title) {
         $this->attributes['title'] = $title;
+    }
+
+    public function getId() {
+        return $this->id;
     }
 
     public function getTitle() {

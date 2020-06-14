@@ -1,5 +1,5 @@
 {{--<input type="text" id="table-search" class="form-control mt-2" placeholder="Search for {{$type}}s"/>--}}
-<table class="table mt-3" id="mediaTable">
+{{--<table class="table mt-3" id="mediaTable">
     <thead>
     <tr>
         <th scope="col">#</th>
@@ -40,4 +40,6 @@
         </tr>
     @endforeach
     </tbody>
-</table>
+</table>--}}
+<list-table-component type="{{ $type }}" :mediaItems="{{json_encode($mediaItems)}}">
+</list-table-component>

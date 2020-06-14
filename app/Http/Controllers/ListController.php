@@ -22,13 +22,16 @@ class ListController extends Controller
     public function list(Request $request) {
         $type = $request['type'];
         if ($type === 'book') {
-            $mediaItems = Book::whereHas('users', function ($query) {
+            $mediaItems = Book::with('format', 'genre')->whereHas('users', function ($query) {
                 return $query->where('users.id', '=', Auth::id());
             })->get();
         } else {
-            $mediaItems = Movie::whereHas('users', function ($query) {
+            $mediaItems = Movie::with('format', 'genre')->whereHas('users', function ($query) {
                 return $query->where('users.id', '=', Auth::id());
             })->get();
+        }
+        foreach ($mediaItems as $item) {
+
         }
         return view('list', ['type' => $type, 'mediaItems' => $mediaItems]);
     }

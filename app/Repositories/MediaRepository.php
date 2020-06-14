@@ -68,7 +68,7 @@ class MediaRepository implements MediaRepositoryInterface
         $genres = array();
         foreach ($allMedia as $book) {
             $genreId = $book;
-            if (!in_array($genreId, $genres, true)) {
+            if (!is_null($genreId) && !in_array($genreId, $genres, true)) {
                 array_push($genres, $genreId);
             }
         }
