@@ -9,8 +9,10 @@ use App\Format;
 use App\Genre;
 use App\Repositories\MediaRepositoryInterface;
 use GuzzleHttp\Client;
+use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class AddController extends Controller
@@ -64,7 +66,72 @@ class AddController extends Controller
         return redirect()->route('home');
     }
 
-    public function queryBookApi(Request $request) {
+    public function addBook(Request $request)
+    {
+        $user = Auth::user();
+        $book = null;
+        try {
+            $book = $request->json('book');
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+            return response()->json('Error occured while parsing json from request: ' . $exception->getMessage(), 500);
+        }
+
+        $book = (object)$book;
+
+        $authors = $book->authors;
+        Log::info($authors);
+        $authorArray = [];
+
+
+        try {
+
+            DB::transaction(function () use ($user, $book, $authors, $authorArray) {
+                // add authors if not existing
+                foreach ($authors as $author) {
+                    $authorNew = Author::where('fullName', $author)->first();
+                    if (is_null($authorNew)) {
+                        $authorNew = new Author();
+                        $authorNew->setFullName($author);
+                        $authorNew->save();
+                    }
+                    array_push($authorArray, $authorNew);
+                }
+                $newBook = new Book([
+                    'title' => $book->title,
+                    'isbn' => $book->isbn,
+                    'imageLink' => $book->imageLink,
+                    'pageCount' => $book->pageCount,
+                    'publishedDate' => $book->publishedDate,
+                    'textSnippet' => $book->textSnippet,
+                    'format_id' => $book->format,
+                    'genre_id' => $book->genre
+                ]);
+                $newBook->save();
+                $newBook->users()->save($user);
+
+                if ($book->read) {
+                    DB::table('user_book')
+                        ->where([
+                            ['user_id', $user->id],
+                            ['book_id', $newBook->getId()]
+                        ])->update(['read' => 1]);
+                }
+
+                foreach ($authorArray as $eAuthor) {
+                    $eAuthor->books()->save($newBook);
+                }
+            });
+            return response()->json('success', 200);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json('Error occured while saving book: ' . $e->getMessage(), 500);
+        }
+
+    }
+
+    public function queryBookApi(Request $request)
+    {
         $base_uri = 'https://www.googleapis.com/books/v1/volumes?q=';
         try {
             $searchAuthor = $request['queryAuthor'];
@@ -73,10 +140,14 @@ class AddController extends Controller
             $plusNeeded = false;
             $client = new Client();// add title query
             if (isset($searchTitle)) {
+                $searchTitle = trim($searchTitle);
+                $searchTitle = str_replace(' ', '+', $searchTitle);
                 $base_uri = $base_uri . $searchTitle;
                 $plusNeeded = true;
             }
             if (isset($searchAuthor)) {
+                $searchAuthor = trim($searchAuthor);
+                $searchAuthor = str_replace(' ', '+', $searchAuthor);
                 $base_uri = $base_uri . ($plusNeeded ? '+' : '') . 'inauthor:' . $searchAuthor;
                 $plusNeeded = true;
             }
@@ -84,6 +155,7 @@ class AddController extends Controller
                 $base_uri = $base_uri . ($plusNeeded ? '+' : '') . 'isbn:' . $searchISBN;
             }
             $base_uri = $base_uri . '&maxResults=10';
+            $base_uri = $base_uri . '&printType=books';
             $base_uri = $base_uri . '&key=' . env('GOOGLE_API_KEY');
             Log::info('Calling ' . $base_uri);
             $response = $client->get($base_uri);
@@ -96,7 +168,7 @@ class AddController extends Controller
             }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return response()->json('Internal error occured: '. $e->getMessage(), 500);
+            return response()->json('Internal error occured: ' . $e->getMessage(), 500);
         }
     }
 }

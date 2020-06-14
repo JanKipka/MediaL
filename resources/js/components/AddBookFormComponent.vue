@@ -5,25 +5,16 @@
                 <h2>Add a {{ type }} to your library</h2>
                 <ul class="nav nav-tabs" id="addTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="existing-media" data-toggle="tab" href="#existingMedia" role="tab"
-                           aria-controls="existingMedia" aria-selected="true">Choose existing {{ type }} from library</a>
+                        <a class="nav-link active" id="query-api" data-toggle="tab" href="#queryApi" role="tab"
+                           aria-controls="queryApi" aria-selected="false">Query books</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="new-media" data-toggle="tab" href="#newMedia" role="tab"
                            aria-controls="newMedia" aria-selected="false">Enter new {{ type }}</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="query-api" data-toggle="tab" href="#queryApi" role="tab"
-                           aria-controls="queryApi" aria-selected="false">Query books</a>
-                    </li>
                 </ul>
                 <div class="tab-content" id="mediaContent">
-                    <div class="tab-pane form-group fade show active"
-                         id="existingMedia" role="tabpanel"
-                         aria-labelledby="existing-media">
-                        <list-table-component :type="type" :mediaitems="mediaitems">
-                        </list-table-component>
-                    </div>
+                    <query-books-component :formats="formats" :genres="genres"></query-books-component>
                     <div class="tab-pane" id="newMedia" role="tabpanel"
                          aria-labelledby="new-media">
                         <form action="/persist" method="POST" id="addForm">
@@ -54,10 +45,12 @@
                                     <label for="format">{{ type === 'book' ? 'Author' : 'Director' }}:</label>
                                     <select class="form-control" name="artist" id="artistSelect">
                                         <option v-for="artist in artists"
-                                            :value="artist.id">{{artist.firstName}} {{artist.lastName}}</option>
+                                                :value="artist.id">{{artist.fullName}}
+                                        </option>
                                     </select>
                                 </div>
-                                <div class="tab-pane" :class="artists.length === 0 ? 'active' : ''" id="new" role="tabpanel"
+                                <div class="tab-pane" :class="artists.length === 0 ? 'active' : ''" id="new"
+                                     role="tabpanel"
                                      aria-labelledby="new-tab">
                                     <div class="form-group">
                                         <label for="artist_name">First
@@ -91,7 +84,6 @@
                             <button type="submit" class="btn btn-primary">Add {{ type }}</button>
                         </form>
                     </div>
-                        <query-books-component></query-books-component>
                 </div>
             </div>
         </div>
@@ -105,7 +97,7 @@
         data() {
             return {
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                placeholderString: 'Enter new name of the ' + this.type === 'book' ? 'author' : 'director',
+                placeholderString: 'Enter new name of the ' + (this.type === 'book' ? 'author' : 'director'),
                 placeholderType: 'Enter the name of the ' + this.type
             };
         },

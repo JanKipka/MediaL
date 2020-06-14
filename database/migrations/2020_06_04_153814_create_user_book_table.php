@@ -17,6 +17,7 @@ class CreateUserBookTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('book_id')->constrained();
+            $table->boolean('read')->default(false);
             $table->timestamps();
         });
     }

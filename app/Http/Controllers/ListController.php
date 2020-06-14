@@ -30,6 +30,9 @@ class ListController extends Controller
                 return $query->where('users.id', '=', Auth::id());
             })->get();
         }
+        foreach ($mediaItems as $item) {
+
+        }
         return view('list', ['type' => $type, 'mediaItems' => $mediaItems]);
     }
 }

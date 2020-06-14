@@ -9,6 +9,17 @@ class Book extends Media
 
     protected $with = ['author'];
 
+    protected $fillable = [
+        'title',
+        'isbn',
+        'imageLink',
+        'pageCount',
+        'publishedDate',
+        'textSnippet',
+        'format_id',
+        'genre_id'
+    ];
+
     public function author() {
         return $this->belongsToMany('App\Author');
     }
