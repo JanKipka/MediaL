@@ -25,14 +25,7 @@
 </head>
 <body>
 <div id="app">
-    <navigation-component app-name="{{ config('app.name', 'Laravel') }}"
-                          authenticated="{{ !\Illuminate\Support\Facades\Auth::guest() }}"
-                          user-name="{{!\Illuminate\Support\Facades\Auth::guest() ? \Illuminate\Support\Facades\Auth::user()->name : ''}}">
-    </navigation-component>
-
-    <main class="py-4">
-        @yield('content')
-    </main>
+    <app app-name="{{ config('app.name', 'Laravel') }}"></app>
 </div>
 @stack('scripts')
 <script src="{{ asset('js/add.js') }}" defer></script>

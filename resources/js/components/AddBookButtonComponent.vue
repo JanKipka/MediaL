@@ -1,11 +1,13 @@
 <template>
-    <button class="btn btn-block" :disabled="disabled" :class="btnClass" @click="add(book)">
+    <button class="btn btn-block" :disabled="disabled" :class="btnClass" @click="click(book)">
         {{ text }}
     </button>
 </template>
 
 <script>
     import EventBus from "./event-bus";
+    import axios from 'axios';
+    import {mapActions} from 'vuex';
 
     export default {
         name: "AddBookButtonComponent",
@@ -19,10 +21,15 @@
             }
         },
         methods: {
-            async add(book) {
-                window.axios.post('/api/addBook', {
-                    book: book
-                }).then((response) => {
+            ...mapActions({
+                add: 'media/addMedia'
+            }),
+            async click(book) {
+                let payload = {
+                    media: book,
+                    type: 'book'
+                };
+                this.add(payload).then((response) => {
                     this.btnClass = 'btn-success';
                     this.text = 'Added';
                 });

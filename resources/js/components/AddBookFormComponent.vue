@@ -93,7 +93,7 @@
 <script>
     export default {
         name: "AddBookFormComponent",
-        props: ['type', 'mediaitems', 'artists', 'formats', 'genres'],
+        props: ['type', 'artists', 'formats', 'genres'],
         data() {
             return {
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),

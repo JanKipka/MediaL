@@ -11,7 +11,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="item in mediaitems">
+        <tr v-for="item in mediaItems">
             <td>{{item.title}}</td>
             <td v-if="type === 'book'">
                 {{ item.author | authors }}
@@ -33,7 +33,7 @@
 <script>
     export default {
         name: "ListTableComponent",
-        props: ['type', 'mediaitems']
+        props: ['type', 'mediaItems']
     }
 </script>
 
