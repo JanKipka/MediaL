@@ -2002,6 +2002,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2094,16 +2109,68 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddBookFormComponent",
   props: ['type', 'artists', 'formats', 'genres'],
   data: function data() {
     return {
+      book: {
+        authors: [],
+        title: '',
+        format: null,
+        genre: null
+      },
+      authorFirstName: '',
+      authorLastName: '',
+      authorFullName: null,
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
       placeholderString: 'Enter new name of the ' + (this.type === 'book' ? 'author' : 'director'),
       placeholderType: 'Enter the name of the ' + this.type
     };
-  }
+  },
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
+    addBook: 'media/addMedia'
+  })), {}, {
+    setArtist: function setArtist() {
+      this.book.authors = [];
+
+      if (this.authorFullName !== null) {
+        this.authorLastName = null;
+        this.authorFirstName = null;
+        this.book.authors.push(this.authorFullName);
+      } else {
+        var fullName = this.authorFirstName + ' ' + this.authorLastName;
+        this.book.authors.push(fullName);
+      }
+    },
+    add: function add() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.addBook({
+                  type: 'book',
+                  media: _this.book
+                }).then(function () {
+                  _this.$router.replace({
+                    name: 'home'
+                  });
+                });
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  })
 });
 
 /***/ }),
@@ -2524,9 +2591,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2546,18 +2611,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Add",
   data: function data() {
     return {
       type: '',
-      artists: []
+      artists: [],
+      formats: []
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     genres: 'media/genres',
-    formats: 'media/formats',
     getArtists: 'media/artists'
   })),
   methods: {
@@ -2594,9 +2658,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return _this.$store.dispatch('media/fetchArtist', param);
 
               case 7:
+                _this.formats = _this.$store.getters["media/" + _this.type + "Formats"];
                 _this.artists = _this.getArtists(_this.type);
 
-              case 8:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -40122,266 +40187,389 @@ var render = function() {
                 }
               },
               [
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.csrf }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "media_title" } }, [
+                    _vm._v("Title:")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.book.title,
+                        expression: "book.title"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      id: "media_title",
+                      name: "title",
+                      placeholder: _vm.placeholderType
+                    },
+                    domProps: { value: _vm.book.title },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.book, "title", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
                 _c(
-                  "form",
+                  "ul",
                   {
-                    attrs: { action: "/persist", method: "POST", id: "addForm" }
+                    staticClass: "nav nav-tabs",
+                    attrs: { id: "artistTab", role: "tablist" }
                   },
                   [
-                    _c("input", {
-                      attrs: { type: "hidden", name: "_token" },
-                      domProps: { value: _vm.csrf }
-                    }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "media_title" } }, [
-                        _vm._v("Title:")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          id: "media_title",
-                          name: "title",
-                          placeholder: _vm.placeholderType
-                        }
-                      })
+                    _c("li", { staticClass: "nav-item" }, [
+                      _c(
+                        "a",
+                        {
+                          ref: "existingTab",
+                          staticClass: "nav-link",
+                          class: _vm.artists.length > 0 ? "active" : "",
+                          attrs: {
+                            id: "existing-tab",
+                            "data-toggle": "tab",
+                            href: "#existing",
+                            role: "tab",
+                            "aria-controls": "existing",
+                            "aria-selected": "true"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "Choose\n                                existing " +
+                              _vm._s(
+                                _vm.type === "book" ? "author" : "director"
+                              )
+                          )
+                        ]
+                      )
                     ]),
                     _vm._v(" "),
+                    _c("li", { staticClass: "nav-item" }, [
+                      _c(
+                        "a",
+                        {
+                          ref: "newTab",
+                          staticClass: "nav-link",
+                          class: _vm.artists.length === 0 ? "active" : "",
+                          attrs: {
+                            id: "new-tab",
+                            "data-toggle": "tab",
+                            href: "#new",
+                            role: "tab",
+                            "aria-controls": "new",
+                            "aria-selected": "false"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "Enter\n                                new " +
+                              _vm._s(
+                                _vm.type === "book" ? "author" : "director"
+                              )
+                          )
+                        ]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-content",
+                    attrs: { id: "artistTabContent" }
+                  },
+                  [
                     _c(
-                      "ul",
+                      "div",
                       {
-                        staticClass: "nav nav-tabs",
-                        attrs: { id: "artistTab", role: "tablist" }
+                        staticClass: "tab-pane form-group fade show",
+                        class: _vm.artists.length > 0 ? "active" : "",
+                        attrs: {
+                          id: "existing",
+                          role: "tabpanel",
+                          "aria-labelledby": "existing-tab"
+                        }
                       },
                       [
-                        _c("li", { staticClass: "nav-item" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "nav-link",
-                              class: _vm.artists.length > 0 ? "active" : "",
-                              attrs: {
-                                id: "existing-tab",
-                                "data-toggle": "tab",
-                                href: "#existing",
-                                role: "tab",
-                                "aria-controls": "existing",
-                                "aria-selected": "true"
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "Choose\n                                    existing " +
-                                  _vm._s(
-                                    _vm.type === "book" ? "author" : "director"
-                                  )
-                              )
-                            ]
+                        _c("label", { attrs: { for: "format" } }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm.type === "book" ? "Author" : "Director"
+                            ) + ":"
                           )
                         ]),
                         _vm._v(" "),
-                        _c("li", { staticClass: "nav-item" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "nav-link",
-                              class: _vm.artists.length === 0 ? "active" : "",
-                              attrs: {
-                                id: "new-tab",
-                                "data-toggle": "tab",
-                                href: "#new",
-                                role: "tab",
-                                "aria-controls": "new",
-                                "aria-selected": "false"
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.authorFullName,
+                                expression: "authorFullName"
                               }
-                            },
-                            [
-                              _vm._v(
-                                "Enter\n                                    new " +
-                                  _vm._s(
-                                    _vm.type === "book" ? "author" : "director"
-                                  )
-                              )
-                            ]
-                          )
-                        ])
+                            ],
+                            staticClass: "form-control",
+                            attrs: { name: "artist", id: "artistSelect" },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.authorFullName = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                                _vm.setArtist
+                              ]
+                            }
+                          },
+                          _vm._l(_vm.artists, function(artist) {
+                            return _c(
+                              "option",
+                              { domProps: { value: artist.fullName } },
+                              [
+                                _vm._v(
+                                  _vm._s(artist.fullName) +
+                                    "\n                                "
+                                )
+                              ]
+                            )
+                          }),
+                          0
+                        )
                       ]
                     ),
                     _vm._v(" "),
                     _c(
                       "div",
                       {
-                        staticClass: "tab-content",
-                        attrs: { id: "artistTabContent" }
+                        staticClass: "tab-pane",
+                        class: _vm.artists.length === 0 ? "active" : "",
+                        attrs: {
+                          id: "new",
+                          role: "tabpanel",
+                          "aria-labelledby": "new-tab"
+                        }
                       },
                       [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "tab-pane form-group fade show",
-                            class: _vm.artists.length > 0 ? "active" : "",
-                            attrs: {
-                              id: "existing",
-                              role: "tabpanel",
-                              "aria-labelledby": "existing-tab"
-                            }
-                          },
-                          [
-                            _c("label", { attrs: { for: "format" } }, [
-                              _vm._v(
-                                _vm._s(
-                                  _vm.type === "book" ? "Author" : "Director"
-                                ) + ":"
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              {
-                                staticClass: "form-control",
-                                attrs: { name: "artist", id: "artistSelect" }
-                              },
-                              _vm._l(_vm.artists, function(artist) {
-                                return _c(
-                                  "option",
-                                  { domProps: { value: artist.id } },
-                                  [
-                                    _vm._v(
-                                      _vm._s(artist.fullName) +
-                                        "\n                                    "
-                                    )
-                                  ]
-                                )
-                              }),
-                              0
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "artist_name" } }, [
+                            _vm._v(
+                              "First\n                                    name:"
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass: "tab-pane",
-                            class: _vm.artists.length === 0 ? "active" : "",
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.authorFirstName,
+                                expression: "authorFirstName"
+                              }
+                            ],
+                            staticClass: "form-control",
                             attrs: {
-                              id: "new",
-                              role: "tabpanel",
-                              "aria-labelledby": "new-tab"
+                              type: "text",
+                              id: "artist_name",
+                              name: "artist_first",
+                              placeholder: _vm.placeholderString
+                            },
+                            domProps: { value: _vm.authorFirstName },
+                            on: {
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.authorFirstName = $event.target.value
+                                },
+                                _vm.setArtist
+                              ]
                             }
-                          },
-                          [
-                            _c("div", { staticClass: "form-group" }, [
-                              _c("label", { attrs: { for: "artist_name" } }, [
-                                _vm._v(
-                                  "First\n                                        name:"
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "text",
-                                  id: "artist_name",
-                                  name: "artist_first",
-                                  placeholder: _vm.placeholderString
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "form-group" }, [
-                              _c(
-                                "label",
-                                { attrs: { for: "artist_lastname" } },
-                                [
-                                  _vm._v(
-                                    "Last\n                                        name:"
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "text",
-                                  id: "artist_lastname",
-                                  name: "artist_last",
-                                  placeholder: _vm.placeholderString
-                                }
-                              })
-                            ])
-                          ]
-                        )
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "artist_lastname" } }, [
+                            _vm._v(
+                              "Last\n                                    name:"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.authorLastName,
+                                expression: "authorLastName"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "artist_lastname",
+                              name: "artist_last",
+                              placeholder: _vm.placeholderString
+                            },
+                            domProps: { value: _vm.authorLastName },
+                            on: {
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.authorLastName = $event.target.value
+                                },
+                                _vm.setArtist
+                              ]
+                            }
+                          })
+                        ])
                       ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "format" } }, [
-                        _vm._v("Format:")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          staticClass: "form-control",
-                          attrs: { name: "format", id: "format" }
-                        },
-                        _vm._l(_vm.formats, function(format) {
-                          return _c(
-                            "option",
-                            { domProps: { value: format.id } },
-                            [_vm._v(_vm._s(format.name))]
-                          )
-                        }),
-                        0
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "genre" } }, [
-                        _vm._v("Genre:")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          staticClass: "form-control",
-                          attrs: { name: "genre", id: "genre" }
-                        },
-                        _vm._l(_vm.genres, function(genre) {
-                          return _c(
-                            "option",
-                            { domProps: { value: genre.id } },
-                            [_vm._v(_vm._s(genre.name))]
-                          )
-                        }),
-                        0
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      attrs: { type: "hidden", name: "type" },
-                      domProps: { value: _vm.type }
-                    }),
-                    _vm._v(" "),
-                    _c("input", {
-                      attrs: {
-                        type: "hidden",
-                        id: "artistTabChoice",
-                        name: "artistTabChoice"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v("Add " + _vm._s(_vm.type))]
                     )
                   ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "format" } }, [
+                    _vm._v("Format:")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.book.format,
+                          expression: "book.format"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { name: "format", id: "format" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.book,
+                            "format",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    _vm._l(_vm.formats, function(format) {
+                      return _c("option", { domProps: { value: format.id } }, [
+                        _vm._v(_vm._s(format.name))
+                      ])
+                    }),
+                    0
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "genre" } }, [_vm._v("Genre:")]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.book.genre,
+                          expression: "book.genre"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { name: "genre", id: "genre" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.book,
+                            "genre",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    _vm._l(_vm.genres, function(genre) {
+                      return _c("option", { domProps: { value: genre.id } }, [
+                        _vm._v(_vm._s(genre.name))
+                      ])
+                    }),
+                    0
+                  )
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "type" },
+                  domProps: { value: _vm.type }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: {
+                    type: "hidden",
+                    id: "artistTabChoice",
+                    name: "artistTabChoice"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.add }
+                  },
+                  [_vm._v("Add " + _vm._s(_vm.type))]
                 )
               ]
             )
@@ -59179,6 +59367,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     formats: function formats(state) {
       return state.formats;
     },
+    bookFormats: function bookFormats(state) {
+      return state.formats.filter(function (format) {
+        return format.mediaFormat === 1;
+      });
+    },
+    movieFormats: function movieFormats(state) {
+      return state.formats.filter(function (format) {
+        return format.mediaFormat === 2;
+      });
+    },
     artists: function artists(state) {
       return function (type) {
         if (type === 'book') {
@@ -59200,12 +59398,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   actions: {
     initMedia: function initMedia(_ref) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var commit, state, response;
+        var commit, state, dispatch, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                commit = _ref.commit, state = _ref.state;
+                commit = _ref.commit, state = _ref.state, dispatch = _ref.dispatch;
 
                 if (!(state.books === null && state.movies === null)) {
                   _context.next = 7;
@@ -59231,6 +59429,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
               case 7:
+                dispatch('fetchMeta');
+
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -59240,12 +59441,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     refreshMedia: function refreshMedia(_ref2) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var commit, state, response;
+        var commit, dispatch, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref2.commit, state = _ref2.state;
+                commit = _ref2.commit, dispatch = _ref2.dispatch;
                 _context2.next = 3;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/media/all');
 
@@ -59352,7 +59553,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     addMedia: function addMedia(_ref5, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var dispatch, state, media, type, response;
+        var dispatch, state, media, type;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
@@ -59367,20 +59568,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 6:
-                response = _context5.sent;
-                return _context5.abrupt("return", dispatch('refreshMedia'));
+                _context5.next = 11;
+                break;
 
-              case 10:
-                _context5.prev = 10;
+              case 8:
+                _context5.prev = 8;
                 _context5.t0 = _context5["catch"](3);
                 console.log('error');
 
-              case 13:
+              case 11:
+                return _context5.abrupt("return", dispatch('refreshMedia'));
+
+              case 12:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, null, [[3, 10]]);
+        }, _callee5, null, [[3, 8]]);
       }))();
     }
   }

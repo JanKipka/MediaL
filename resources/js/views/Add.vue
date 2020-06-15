@@ -5,7 +5,6 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import {mapGetters} from "vuex";
 
     export default {
@@ -14,12 +13,12 @@
             return {
                 type: '',
                 artists: [],
+                formats: []
             }
         },
         computed: {
             ...mapGetters({
                 genres: 'media/genres',
-                formats: 'media/formats',
                 getArtists: 'media/artists'
             }),
         },
@@ -37,6 +36,7 @@
                     }
                     await this.$store.dispatch('media/fetchArtist', param);
                 }
+                this.formats = this.$store.getters["media/" + this.type + "Formats"];
                 this.artists = this.getArtists(this.type);
             }
         },

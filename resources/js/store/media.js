@@ -48,6 +48,12 @@ export default {
         formats(state) {
             return state.formats;
         },
+        bookFormats(state) {
+            return state.formats.filter(format => format.mediaFormat === 1);
+        },
+        movieFormats(state) {
+            return state.formats.filter(format => format.mediaFormat === 2);
+        },
         artists: (state) => (type) => {
             if (type === 'book') {
                 return state.authors;
@@ -65,7 +71,7 @@ export default {
         directors: null
     },
     actions: {
-        async initMedia({commit, state}) {
+        async initMedia({commit, state, dispatch}) {
             if (state.books === null && state.movies === null) {
                 let response = await axios.get('/media/all');
                 if (response.data.books.length > 0) {
@@ -80,9 +86,10 @@ export default {
                     commit('SET_MOVIES', []);
                 }
             }
+            dispatch('fetchMeta');
         },
 
-        async refreshMedia({commit, state}) {
+        async refreshMedia({commit, dispatch}) {
             let response = await axios.get('/media/all');
             if (response.data.books.length > 0) {
                 commit('SET_BOOKS', response.data.books);
@@ -134,13 +141,13 @@ export default {
             let media = payload.media;
             let type = payload.type;
             try {
-                let response = await axios.post('/media/add/' + type, {
+                await axios.post('/media/add/' + type, {
                     media: media
                 });
-                return dispatch('refreshMedia');
             } catch (e) {
                 console.log('error');
             }
+            return dispatch('refreshMedia');
         }
     }
 }

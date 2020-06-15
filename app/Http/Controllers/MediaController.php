@@ -72,18 +72,18 @@ class MediaController extends Controller
                 }
                 $newBook = new Book([
                     'title' => $book->title,
-                    'isbn' => $book->isbn,
-                    'imageLink' => $book->imageLink,
-                    'pageCount' => $book->pageCount,
-                    'publishedDate' => $book->publishedDate,
-                    'textSnippet' => $book->textSnippet,
+                    'isbn' => $book->isbn ?? null,
+                    'imageLink' => $book->imageLink ?? '',
+                    'pageCount' => $book->pageCount ?? 0,
+                    'publishedDate' => $book->publishedDate ?? null,
+                    'textSnippet' => $book->textSnippet ?? '',
                     'format_id' => $book->format,
                     'genre_id' => $book->genre
                 ]);
                 $newBook->save();
                 $newBook->users()->save($user);
-
-                if ($book->read) {
+                $read = $book->read ?? false;
+                if ($read) {
                     DB::table('user_book')
                         ->where([
                             ['user_id', $user->id],
