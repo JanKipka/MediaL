@@ -6,6 +6,17 @@ export default {
         token: null,
         user: null
     },
+
+    getters: {
+        authenticated(state) {
+            return state.token && state.user;
+        },
+
+        user(state) {
+            return state.user;
+        }
+    },
+
     mutations: {
         SET_TOKEN(state, token) {
             state.token = token;
@@ -18,21 +29,29 @@ export default {
         async signIn({dispatch}, credentials) {
             let response = await axios.post('/auth/signin', credentials);
 
-            dispatch('attempt', response.data.token);
+            return dispatch('attempt', response.data.token);
         },
 
-        async attempt({ commit }, token) {
-            commit('SET_TOKEN', token);
+        async register({commit}, registerData) {
+            let response = await axios.post('/auth/register', registerData);
+
+            return 'success';
+        },
+
+        async attempt({commit, state}, token) {
+            if (token) {
+                commit('SET_TOKEN', token);
+            }
+
+            if (!state.token) {
+                return;
+            }
 
             try {
-                let response = await axios.get('auth/user', {
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    }
-                });
+                let response = await axios.get('auth/user');
 
                 commit('SET_USER', response.data.data);
-            } catch(e) {
+            } catch (e) {
                 commit('SET_USER', null);
                 commit('SET_TOKEN', null);
             }

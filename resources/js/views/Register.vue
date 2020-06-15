@@ -63,6 +63,8 @@
 </template>
 
 <script>
+    import {mapActions} from "vuex";
+
     export default {
         name: "Register",
         data() {
@@ -75,24 +77,21 @@
             }
         },
         methods: {
+            ...mapActions({
+                register: 'auth/register'
+            }),
             submit() {
                 let app = this;
-                this.$auth.register({
-                    data: {
-                        name: app.username,
-                        email: app.email,
-                        password: app.password
-                    },
-                    success: function () {
-                        app.successV = true;
-                        app.$router.push(
-                            {
-                                name: 'login'
-                            });
-                    },
-                    error: function (resp) {
-                        console.log(resp);
-                    }
+                this.register({
+                    name: app.username,
+                    email: app.email,
+                    password: app.password
+                }).then(() => {
+                    this.$router.replace({
+                        name: 'login'
+                    });
+                }, (error) => {
+                    console.log('failed');
                 });
             }
         }

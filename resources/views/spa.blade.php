@@ -25,7 +25,7 @@
 </head>
 <body>
 <div id="app">
-    <app appname="{{ config('app.name', 'Laravel') }}"></app>
+    <app app-name="{{ config('app.name', 'Laravel') }}"></app>
 </div>
 @stack('scripts')
 <script src="{{ asset('js/add.js') }}" defer></script>

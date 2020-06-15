@@ -25,8 +25,13 @@ Route::prefix('auth')->group(function () {
         Route::post('logout', 'AuthController@logout');
     });
 });
-Route::post('/queryBooks', 'AddController@queryBookApi');
-Route::post('/addBook', 'AddController@addBook');
-Route::get('/index', 'HomeController@home');
+Route::post('ext/query/books', 'ApiController@books');
+Route::post('ext/query/movies', 'ApiController@movies');
 
-// Route::post('/persist', 'AddController@persist')->name('books.persist');
+Route::prefix('media')->group(function () {
+    Route::get('/all', 'MediaController@all');
+    Route::post('/add/book', 'MediaController@addBook');
+    Route::get('/meta/all', 'MetaController@all');
+    Route::get('/meta/authors', 'MetaController@authors');
+    Route::get('/meta/directors', 'MetaController@directors');
+});

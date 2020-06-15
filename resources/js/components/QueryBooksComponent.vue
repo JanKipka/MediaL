@@ -23,6 +23,7 @@
     import AddBookButtonComponent from "./AddBookButtonComponent";
     import SelectComponent from "./SelectComponent";
     import BookCardComponent from "./BookCardComponent";
+    import axios from 'axios';
     import EventBus from "./event-bus";
 
     function Book(title, authors, pageCount, imageLink, isbn, publishedDate, textSnippet) {
@@ -66,7 +67,7 @@
                     }
                     this.timer = setTimeout(() => {
                         console.log('executing...');
-                        window.axios.post('api/queryBooks', {
+                        axios.post('ext/query/books', {
                             queryAuthor: this.queryAuthor,
                             queryISBN: this.queryISBN,
                             queryTitle: this.queryTitle,

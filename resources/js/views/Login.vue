@@ -71,27 +71,15 @@
                 this.signIn({
                     email: this.username,
                     password: this.password
+                }).then(() => {
+                    this.$router.replace({
+                        name: 'home'
+                    });
+                }).catch(() => {
+                    console.log('failed');
+                    // validation
                 });
             }
-            /*login() {
-                let app = this;
-                this.$auth.login({
-                    params: {
-                        email: app.username,
-                        password: app.password
-                    },
-                    success: function () {
-                        app.$router.push({
-                            name: 'home'
-                        });
-                    },
-                    error: function (resp) {
-                        console.log(resp);
-                    },
-                    rememberMe: true,
-                    fetchUser: false,
-                });
-            }*/
         }
     }
 </script>
