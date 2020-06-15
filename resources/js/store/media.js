@@ -95,6 +95,11 @@ export default {
             } else {
                 commit('SET_MOVIES', []);
             }
+
+            // reset these states so they have to be
+            // pulled in freshly again
+            commit('SET_AUTHORS', null);
+            commit('SET_DIRECTORS', null);
         },
 
         async fetchMeta({commit, state}) {

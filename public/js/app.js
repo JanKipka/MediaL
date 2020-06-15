@@ -59262,9 +59262,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   commit('SET_MOVIES', response.data.movies);
                 } else {
                   commit('SET_MOVIES', []);
-                }
+                } // reset these states so they have to be
+                // pulled in freshly again
 
-              case 6:
+
+                commit('SET_AUTHORS', null);
+                commit('SET_DIRECTORS', null);
+
+              case 8:
               case "end":
                 return _context2.stop();
             }
