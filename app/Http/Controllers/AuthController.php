@@ -38,11 +38,16 @@ class AuthController extends Controller
     }
     public function user(Request $request)
     {
-        $user = User::find(Auth::user()->id);
-        return response()->json([
-            'status' => 'success',
-            'data' => $user
-        ]);
+        try {
+            $user = Auth::user();
+            return response()->json([
+                'status' => 'success',
+                'data' => $user
+            ]);
+        } catch (\Exception $e) {
+            return response()->json('Request failed: ' . $e->getMessage(), 500);
+        }
+
     }
     public function refresh()
     {
