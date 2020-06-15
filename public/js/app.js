@@ -58109,7 +58109,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('book-card-component', __we
 
 
 window.Vue = vue__WEBPACK_IMPORTED_MODULE_0___default.a;
-axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("http://127.0.0.1:8080", "/api");
+axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("http://medial-env.eba-mrwemzyy.eu-central-1.elasticbeanstalk.com", "/api");
 _store_index__WEBPACK_IMPORTED_MODULE_4__["default"].dispatch('auth/attempt', localStorage.getItem('token')).then(function () {
   var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     router: _router_router__WEBPACK_IMPORTED_MODULE_3__["default"],
