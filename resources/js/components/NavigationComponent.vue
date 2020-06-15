@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="/home">
-                {{ appName }}
+                {{ appname }}
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -28,7 +28,7 @@
                     <li class="nav-item dropdown" v-else>
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ userName }} <span class="caret"></span>
+                            {{ username }} <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a href="/profile"
@@ -60,7 +60,7 @@
         },
         name: "NavigationComponent",
         props: [
-            'appName', 'userName', 'authenticated'
+            'appname', 'username', 'authenticated'
         ]
     }
 </script>

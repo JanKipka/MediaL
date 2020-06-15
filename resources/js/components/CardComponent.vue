@@ -3,7 +3,7 @@
         <div class="card-body">
             <h2 class="card-title">{{ title }}</h2>
             <h5>{{ subheadline }}</h5>
-            <a v-for="link in links" :href="link.url" class="m-2" :class="link.btn">{{link.desc}}</a>
+            <router-link v-for="link in links" :key="link.url" :to="{ name: link.url, params: link.params}" class="m-2" :class="link.btn">{{link.desc}}</router-link>
         </div>
     </div>
 </template>

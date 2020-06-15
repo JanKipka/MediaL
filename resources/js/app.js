@@ -5,8 +5,10 @@
  */
 
 require('./bootstrap');
-
-window.Vue = require('vue');
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import axios from 'axios';
+import 'es6-promise/auto';
 
 /**
  * The following block of code may be used to automatically register your
@@ -86,8 +88,23 @@ Vue.filter('date', function (date) {
     } catch (exception) {
         return date;
     }
-})
+});
+
+import App from "./views/App";
+
+import router from "./router/router";
+import store from "./store/index";
+
+window.Vue = Vue;
+
+Vue.router = router;
+Vue.use(VueRouter);
+
+axios.defaults.baseURL = `${process.env.MIX_APP_URL}/api`;
 
 const app = new Vue({
+    router,
+    store,
     el: '#app',
+    components: {App},
 });

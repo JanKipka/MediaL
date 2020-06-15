@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function __construct(MediaRepositoryInterface $mediaRepository)
     {
-        $this->middleware('auth');
+        $this->middleware('auth:api');
         $this->mediaRepository = $mediaRepository;
     }
 
@@ -47,6 +47,20 @@ class HomeController extends Controller
             'countOfGenres' => $numGenres,
             'totalCount' => count($books) + count($movies),
             'user' => $user
+        ]);
+    }
+
+    public function home()
+    {
+        $books = $this->mediaRepository->getAllBooksForUser();
+        $movies = $this->mediaRepository->getAllMoviesForUser();
+        $numGenres = $this->mediaRepository->getNumberOfGenres();
+        $user = Auth::user();
+        return response()->json([
+            'bookCount' => count($books),
+            'movieCount' => count($movies),
+            'genreCount' => $numGenres,
+            'userName' => $user
         ]);
     }
 
