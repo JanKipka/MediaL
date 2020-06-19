@@ -31,7 +31,10 @@ Route::post('ext/query/movies', 'ApiController@movies');
 Route::prefix('media')->group(function () {
     Route::get('/all', 'MediaController@all');
     Route::post('/add/book', 'MediaController@addBook');
+    Route::get('/books/author/{id}', 'MediaController@booksByAuthor');
     Route::get('/meta/all', 'MetaController@all');
     Route::get('/meta/authors', 'MetaController@authors');
+    Route::get('/meta/authors/{id}', 'MetaController@author');
+    Route::post('/meta/authors/update/{id}', 'MetaController@updateAuthor');
     Route::get('/meta/directors', 'MetaController@directors');
 });

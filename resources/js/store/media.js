@@ -1,4 +1,5 @@
 import axios from "axios";
+import auth from "./auth";
 
 export default {
     namespaced: true,
@@ -21,6 +22,16 @@ export default {
 
         SET_AUTHORS(state, authors) {
             state.authors = authors;
+        },
+
+        UPDATE_AUTHOR(state, newAuthor) {
+            if (state.authors !== null) {
+                state.authors.filter(author => function () {
+                    if (author.id === newAuthor.id) {
+                        author = newAuthor;
+                    }
+                });
+            }
         },
 
         SET_DIRECTORS(state, directors) {
@@ -60,6 +71,17 @@ export default {
             } else {
                 return state.directors;
             }
+        },
+        author: (state) => (id) => {
+            return state.authors.filter(author => author.id === id);
+        },
+
+        booksByAuthor: (state) => (id) => {
+            if (state.books === null) {
+                return null;
+            }
+
+            return state.books.filter((book) => book.author.some((author) => author.id === id));
         }
     },
     state: {
@@ -117,7 +139,7 @@ export default {
             }
         },
 
-        async fetchArtist({commit, state}, type) {
+        async fetchArtists({commit, state}, type) {
             let typeString = type + 's';
             if (state[typeString] === null) {
                 let response = await axios.get('media/meta/' + typeString)
@@ -135,6 +157,33 @@ export default {
                     }
                 }
             }
+        },
+
+        async updateArtist({commit, state}, {type, id, updateInfo}) {
+            let endpoint = 'authors'
+            if (type === 'movie') {
+                endpoint = 'directors'
+            }
+
+            let response = await axios.post('media/meta/' + endpoint + '/update/' + id, {
+                author: updateInfo
+            });
+            switch (type) {
+                case 'book':
+                    let newAuthor = response.data.author;
+                    commit('UPDATE_AUTHOR', newAuthor);
+                    break;
+            }
+        },
+
+        async fetchArtist({state}, {type, id}) {
+            let endpoint = 'authors'
+            if (type === 'movie') {
+                endpoint = 'directors'
+            }
+
+            let response = await axios.get('media/meta/' + endpoint + '/' + id);
+            return response.data.author;
         },
 
         async addMedia({dispatch, state}, payload) {

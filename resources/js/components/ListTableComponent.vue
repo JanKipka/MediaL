@@ -14,7 +14,10 @@
         <tr v-for="item in mediaItems">
             <td>{{item.title}}</td>
             <td v-if="type === 'book'">
-                {{ item.author | authors }}
+                <router-link v-for="author in item.author" :key="author.id" :to="{name: 'author', params: {id: author.id}}">
+                    {{ author.fullName }}
+                </router-link>
+<!--                {{ item.author | authors }}-->
             </td>
             <td v-else>
                 <template v-for="director in item.director">

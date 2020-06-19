@@ -6,6 +6,7 @@ import Login from "../views/Login";
 import store from "../store/index";
 import Add from "../views/Add";
 import List from "../views/List";
+import Author from "../views/Author";
 
 Vue.use(VueRouter);
 
@@ -52,6 +53,14 @@ const router = new VueRouter({
             meta: {
                 guest: true
             },
+        },
+        {
+            path: '/author/:id',
+            name: 'author',
+            component: Author,
+            meta: {
+                requiresAuth: true
+            }
         }
     ]
 });

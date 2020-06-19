@@ -34,7 +34,7 @@
                     } else {
                         param = 'director';
                     }
-                    await this.$store.dispatch('media/fetchArtist', param);
+                    await this.$store.dispatch('media/fetchArtists', param);
                 }
                 this.formats = this.$store.getters["media/" + this.type + "Formats"];
                 this.artists = this.getArtists(this.type);

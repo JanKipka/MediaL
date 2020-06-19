@@ -102,4 +102,24 @@ class MediaController extends Controller
         }
 
     }
+
+    public function booksByAuthor(Request $request, $id) {
+        $books = Book::with('format', 'genre')->whereHas('users', function ($query) {
+            return $query->where('users.id', '=', Auth::id());
+        })->get();
+        $filtered = $books->filter(function ($book) use ($id) {
+            Log::info($id);
+            $authors = $book->author;
+            foreach ($authors as $author) {
+                $authorId = $author->id;
+                if ($authorId == $id) {
+                    return true;
+                }
+            }
+            return false;
+        })->values();
+        return response()->json([
+            'books' => $filtered
+        ]);
+    }
 }

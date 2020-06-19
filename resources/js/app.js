@@ -25,6 +25,7 @@ import './store/subscriber.js';
 
 window.Vue = Vue;
 
+
 axios.defaults.baseURL = `${process.env.MIX_APP_URL}/api`;
 
 store.dispatch('auth/attempt', localStorage.getItem('token')).then(() => {
